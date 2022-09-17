@@ -1,0 +1,29 @@
+name: Linting
+on:
+  push
+
+jobs:
+  shelllint:
+    name: Lint bash files
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Run Shellcheck
+      uses: azohra/shell-linter@v0.6.0
+
+  markdown-lint:
+    name: Lint markdown files (check links validity)
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Check the validity of the links in the documentation
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          folder-path: '.'
